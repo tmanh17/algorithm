@@ -1,0 +1,52 @@
+#include <iostream>
+#include <map>
+#include <set>
+
+#define ll long long
+using namespace std;
+
+const int MAX_N=500005;
+ll MOD=1e9+7;
+int T, N, Q;;
+
+int main() {
+    freopen("in.txt", "r", stdin);
+    freopen("out.txt", "w", stdout);
+    
+    cin >> T;
+    for (int tt = 1; tt <= T; tt++) {
+        ll ans = 0;
+        
+        int a[MAX_N], b[MAX_N], x[MAX_N], y[MAX_N];
+        ll sumTreeX = 0, sumTreeY = 0;
+        ll sumTreeX2 = 0, sumTreeY2 = 0;
+        cin >> N;
+        for (int i = 0; i < N; i++) {
+            cin >> a[i] >> b[i];
+            sumTreeX = (sumTreeX + a[i]) % MOD;
+            sumTreeY = (sumTreeY + b[i]) % MOD;
+            sumTreeX2 = (sumTreeX2 + a[i] * a[i] % MOD) % MOD;
+            sumTreeY2 = (sumTreeY2 + b[i] * b[i] % MOD ) % MOD;
+        }
+        cin >> Q;
+        for (int i = 0; i < Q; i++) {
+            cin >> x[i] >> y[i];
+            for (int j = 0; j < N; j++) {
+                ans = ans + (x[i] - a[j]) * (x[i] - a[j]) % MOD;
+                ans = ans % MOD;
+                ans = ans + (y[i] - b[j]) * (y[i] - b[j]) % MOD;
+                ans = ans % MOD;
+            }
+            // ans = (ans + N * (x[i] * x[i] % MOD) % MOD) % MOD;
+            // ans = (ans - 2 * x[i] * sumTreeX % MOD) % MOD;
+            // ans = (ans + sumTreeX2) % MOD;
+
+            // ans = (ans + N * (y[i] * y[i] % MOD) % MOD) % MOD;
+            // ans = (ans - 2 * y[i] * sumTreeY % MOD) % MOD;
+            // ans = (ans + sumTreeY2) % MOD;
+        }
+        cout << "Case #" << tt << ": " << ans << endl;
+    }
+
+    return 0;
+}
